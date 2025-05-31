@@ -28,7 +28,17 @@ func prepend(oi sortedList, v int) sortedList {
 	return tmp
 }
 
-func Make(list []int) SortedList {
+func NewSortedList(l, c int) SortedList {
+	var list []int
+	if l > c {
+		l, c = c, l
+	}
+	list = make([]int, l, c)
+	sl := sortedList(list)
+	return &sl
+}
+
+func NewSorted(list []int) SortedList {
 	sl := sortedList(list)
 	sl.Sort()
 	return &sl
