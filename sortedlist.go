@@ -112,10 +112,3 @@ func (sl *sortedList) distinct() *sortedList {
 func (sl *sortedList) At(i int) int {
 	return (*sl)[i]
 }
-
-type SortedList interface {
-	Distinct() SortedList
-	At(int) int
-	Insert(v int)
-	Len() int
-}
