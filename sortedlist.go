@@ -1,11 +1,17 @@
 package golist
 
-import "github.com/ChrisShia/gosort"
+import (
+	"github.com/ChrisShia/gosort"
+)
 
 type sortedList []int
 
 func (sl *sortedList) Len() int {
 	return len(*sl)
+}
+
+func (sl *sortedList) Cap() int {
+	return cap(*sl)
 }
 
 func (sl *sortedList) Insert(v int) {
@@ -28,19 +34,25 @@ func prepend(oi sortedList, v int) sortedList {
 	return tmp
 }
 
-func NewSortedList(l, c int) SortedList {
+func MakeSortedList(size ...int) SortedList {
 	var list []int
-	if l > c {
-		l, c = c, l
+	switch len(size) {
+	case 0:
+		list = make([]int, 0)
+	case 1:
+		list = make([]int, size[0])
+	default:
+		list = make([]int, size[0], size[1])
 	}
-	list = make([]int, l, c)
 	sl := sortedList(list)
 	return &sl
 }
 
-func NewSorted(list []int) SortedList {
+func MakeSorted(list []int) SortedList {
 	sl := sortedList(list)
-	sl.Sort()
+	if len(list) > 0 {
+		sl.Sort()
+	}
 	return &sl
 }
 

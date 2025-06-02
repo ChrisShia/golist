@@ -5,4 +5,5 @@ type SortedList interface {
 	At(int) int
 	Insert(v int)
 	Len() int
+	Cap() int
 }

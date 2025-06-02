@@ -133,3 +133,56 @@ func Test_SortedListDistinct(t *testing.T) {
 		})
 	}
 }
+
+func Test_MakeSortedList(t *testing.T) {
+	var tt = []struct {
+		name           string
+		input          []int
+		expectedLength int
+		expectedCap    int
+	}{
+		{"", []int{0}, 0, 0},
+		{"", []int{2}, 2, 2},
+		{"", []int{20, 25}, 20, 25},
+	}
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			sl := MakeSortedList(tc.input...)
+			actualLength := sl.Len()
+			actualCap := sl.Cap()
+			if actualLength != tc.expectedLength {
+				t.Errorf("expected length %v, got %v", tc.expectedLength, actualLength)
+			}
+			if actualCap != tc.expectedCap {
+				t.Errorf("expected cap %v, got %v", tc.expectedCap, actualCap)
+			}
+		})
+	}
+}
+
+func Test_MakeSorted(t *testing.T) {
+	var tt = []struct {
+		name        string
+		input       []int
+		expected    []int
+		expectedLen int
+		expectedCap int
+	}{
+		{"", []int{3, 2, 4, 1000, 17}, []int{2, 3, 4, 17, 1000}, 5, 5},
+	}
+	for _, tc := range tt {
+		sorted := MakeSorted(tc.input)
+		if sorted.Len() != tc.expectedLen {
+			t.Errorf("expected length %v, got %v", tc.expectedLen, sorted.Len())
+		}
+		if sorted.Cap() != tc.expectedCap {
+			t.Errorf("expected cap %v, got %v", tc.expectedCap, sorted.Cap())
+		}
+		for i, expected := range tc.expected {
+			actual := sorted.At(i)
+			if actual != expected {
+				t.Errorf("expected %v, got %v", expected, actual)
+			}
+		}
+	}
+}
